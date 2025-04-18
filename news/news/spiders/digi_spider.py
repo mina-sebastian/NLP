@@ -6,7 +6,6 @@ class Digi24Spider(scrapy.Spider):
     name = "digi24"
     allowed_domains = ["digi24.ro"]
     start_urls = [
-        "https://www.digi24.ro/",
         "https://www.digi24.ro/stiri/politica",
         "https://www.digi24.ro/stiri/economie",
         "https://www.digi24.ro/stiri/externe",
@@ -20,6 +19,7 @@ class Digi24Spider(scrapy.Spider):
             relative_url = article.css("a::attr(href)").get()
             if relative_url:
                 full_url = urljoin(response.url, relative_url)
+                
                 if "/stiri/" in full_url:
                     yield response.follow(full_url, callback=self.parse_article)
 
